@@ -97,15 +97,35 @@ const proxy = new Proxy(myObj, {
 });
 undefined
 proxy.name = 'sdfsdf';
-VM250:9 set value
+set value
 "sdfsdf"
 proxy.name = 'cd';
-VM250:9 set value
+set value
 "cd"
 myObj;
 {name: "cd", changedValue: 2}
 (...생략)
 proxy.changedValue;
-VM250:5 get value
+get value
 2
+```
+
+### 없는 property값을 찾을 때 default값 설정
+
+```
+const proxy = new Proxy({name:'hannah', changedValue: 0}, {
+    get: function(target, property, receiver) {
+        return (property in target) ? target[property] : "anonymous";
+    },
+    set: function(target, property, value) { // 여기서의 target은 myObj를 가리킴
+        console.log('set value');
+        target['changedValue']++;
+        target[property] = value;
+    }
+});
+undefined
+proxy.name
+"hannah"
+proxy.age
+"anonymous"
 ```
