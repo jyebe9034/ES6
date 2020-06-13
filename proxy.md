@@ -1,4 +1,4 @@
-### proxy
+# proxy
 
 ```
 const myObj = {name:'jyebe'};
@@ -21,5 +21,22 @@ proxy === myObj;
 false
 proxy.name === myObj.name
 true
+```
+
+### proxy객체 안의 값을 바꾸려고 하면 자동으로 set함수가 동작함
+
+```
+const myObj = {name:'hannah'};
+const proxy = new Proxy(myObj, {
+    get: function() {
+    },
+    set: function() {
+        console.log('change value');
+    }
+});
+undefined
+proxy.name = 'jyebe';
+VM86:6 change value
+"jyebe"
 ```
 
