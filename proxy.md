@@ -36,7 +36,30 @@ const proxy = new Proxy(myObj, {
 });
 undefined
 proxy.name = 'jyebe';
-VM86:6 change value
+change value
 "jyebe"
 ```
 
+### get의 인자값
+```
+const myObj = {name:'hannah'};
+const proxy = new Proxy(myObj, {
+    get: function(target, property, receiver) { // reseiver 는 proxy객체 자체를 말함
+        console.log('get value');
+        return target[property];
+    },
+    set: function() {
+        console.log('change value');
+    }
+});
+undefined
+proxy.name;
+get value
+"hannah"
+proxy.name = 'jyebe'
+change value
+"jyebe"
+proxy.name;
+get value
+"hannah"
+```
