@@ -63,3 +63,49 @@ proxy.name;
 get value
 "hannah"
 ```
+
+### set의 인자값
+```
+const myObj = {name:'hannah'};
+const proxy = new Proxy(myObj, {
+    get: function(target, property, receiver) {
+        console.log('get value');
+        return target[property];
+    },
+    set: function(target, property, value) { // 여기서의 target은 myObj를 가리킴
+        console.log('set value');
+        target[property] = value;
+    }
+});
+```
+
+### changedValue추가 (값이 변경될때마다 1씩 증가하는 변수)
+
+```
+const myObj = {name:'hannah', changedValue: 0};
+
+const proxy = new Proxy(myObj, {
+    get: function(target, property, receiver) {
+        console.log('get value');
+        return target[property];
+    },
+    set: function(target, property, value) { // 여기서의 target은 myObj를 가리킴
+        console.log('set value');
+        target['changedValue']++;
+        target[property] = value;
+    }
+});
+undefined
+proxy.name = 'sdfsdf';
+VM250:9 set value
+"sdfsdf"
+proxy.name = 'cd';
+VM250:9 set value
+"cd"
+myObj;
+{name: "cd", changedValue: 2}
+(...생략)
+proxy.changedValue;
+VM250:5 get value
+2
+```
